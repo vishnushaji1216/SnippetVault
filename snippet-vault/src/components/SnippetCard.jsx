@@ -1,11 +1,12 @@
 import { Copy, Trash2 } from "lucide-react";
+import toast from 'react-hot-toast';
 
 const SnippetCard = ({ title, language, code, tags, onDelete }) => {
   
   
   const handleCopy = () => {
     navigator.clipboard.writeText(code);
-    alert("Copied to clipboard!"); 
+    toast.success("Code copied to clipboard!");
   };
 
   return (

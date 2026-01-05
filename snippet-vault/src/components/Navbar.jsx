@@ -1,6 +1,7 @@
-import { Code2, Plus, Search } from 'lucide-react'; // Import icons
+import { Code2, Plus, Search } from 'lucide-react'; 
+import { Link } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({ onSearch }) => {
   return (
     <nav className="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/80 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -21,15 +22,18 @@ const Navbar = () => {
               type="text"
               placeholder="Search snippets..."
               className="w-full rounded-full border border-slate-800 bg-slate-900/50 py-2 pl-10 pr-4 text-sm text-slate-200 placeholder-slate-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all"
+              onChange={(e) => onSearch(e.target.value)}
             />
           </div>
         </div>
 
         <div className="flex items-center gap-4">
+        <Link to="/add">
           <button className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/25 active:scale-95">
             <Plus size={18} strokeWidth={2.5} />
             <span>New Snippet</span>
           </button>
+        </Link>
         </div>
 
       </div>
