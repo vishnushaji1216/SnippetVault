@@ -10,9 +10,11 @@ const Navbar = ({ onSearch }) => {
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-white shadow-lg shadow-blue-500/20">
             <Code2 size={20} strokeWidth={2.5} />
           </div>
+          <Link to='/'>
           <span className="hidden text-lg font-bold tracking-tight text-slate-100 sm:block">
             SnippetVault
           </span>
+          </Link>
         </div>
 
         <div className="hidden flex-1 items-center justify-center px-8 md:flex">

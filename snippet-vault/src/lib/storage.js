@@ -1,47 +1,102 @@
 import { supabase } from './supabase';
 
-// 1. GET ALL SNIPPETS (Async now!)
+const USING_SUPABASE = !!supabase; 
+const LOCAL_KEY = 'snippet-vault-data';
+
+// 1. THE CACHE VARIABLE
+// This stays in memory as long as the page is open
+let memoryCache = null;
+
+// --- GET SNIPPETS ---
 export const getSnippets = async () => {
-  // Select everything from the 'snippets' table, ordered by newest first
-  const { data, error } = await supabase
-    .from('snippets')
-    .select('*')
-    .order('created_at', { ascending: false });
-  
-  if (error) {
-    console.error("Error loading snippets:", error);
-    return [];
+  // A. Check Memory Cache First (Instant Speed)
+  if (memoryCache) {
+    return memoryCache;
   }
-  return data;
+
+  // B. If Cache is empty, fetch from source
+  if (USING_SUPABASE) {
+    const { data, error } = await supabase
+      .from('snippets')
+      .select('*')
+      .order('created_at', { ascending: false });
+    
+    if (!error) {
+      memoryCache = data; // <--- Save to cache
+    }
+    return error ? [] : data;
+  } else {
+    // Local Storage logic
+    const data = localStorage.getItem(LOCAL_KEY);
+    const parsed = data ? JSON.parse(data) : [];
+    memoryCache = parsed; // <--- Save to cache
+    return parsed;
+  }
 };
 
-// 2. ADD A NEW SNIPPET
+// --- ADD SNIPPET ---
 export const addSnippet = async (snippet) => {
-  // Convert "react, hook" string -> ['react', 'hook'] array
   const tagsArray = Array.isArray(snippet.tags) 
     ? snippet.tags 
     : snippet.tags.split(',').map(tag => tag.trim());
 
-  const { error } = await supabase
-    .from('snippets')
-    .insert([
-      { 
+  if (USING_SUPABASE) {
+    // 1. Send to Cloud AND get the real data back (.select())
+    const { data, error } = await supabase
+      .from('snippets')
+      .insert([{ 
         title: snippet.title,
         language: snippet.language,
         code: snippet.code,
         tags: tagsArray
-      }
-    ]);
+      }])
+      .select(); // <--- Important: Get the created row back!
 
-  if (error) console.error("Error saving snippet:", error);
+    if (!error && data) {
+      // 2. Update Cache Manually (Optimistic Update)
+      // We add the new item to the TOP of the cache array
+      if (memoryCache) {
+        memoryCache = [data[0], ...memoryCache]; 
+      }
+    }
+  } else {
+    // Local Storage Mode
+    const newSnippet = {
+      id: Date.now(),
+      created_at: new Date().toISOString(),
+      title: snippet.title,
+      language: snippet.language,
+      code: snippet.code,
+      tags: tagsArray
+    };
+    
+    // Update LocalStorage
+    const current = JSON.parse(localStorage.getItem(LOCAL_KEY) || '[]');
+    const updated = [newSnippet, ...current];
+    localStorage.setItem(LOCAL_KEY, JSON.stringify(updated));
+    
+    // Update Memory Cache
+    memoryCache = updated;
+  }
 };
 
-// 3. DELETE A SNIPPET
+// --- DELETE SNIPPET ---
 export const deleteSnippet = async (id) => {
-  const { error } = await supabase
-    .from('snippets')
-    .delete()
-    .eq('id', id);
-
-  if (error) console.error("Error deleting snippet:", error);
+  if (USING_SUPABASE) {
+    // 1. Delete from Cloud
+    await supabase.from('snippets').delete().eq('id', id);
+    
+    // 2. Update Cache Manually
+    if (memoryCache) {
+      memoryCache = memoryCache.filter(item => item.id !== id);
+    }
+  } else {
+    // Local Storage Mode
+    const current = JSON.parse(localStorage.getItem(LOCAL_KEY) || '[]');
+    const updated = current.filter(item => item.id !== id);
+    localStorage.setItem(LOCAL_KEY, JSON.stringify(updated));
+    
+    // Update Memory Cache
+    memoryCache = updated;
+  }
 };
