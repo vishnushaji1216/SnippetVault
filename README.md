@@ -2,7 +2,8 @@
 
 A high-performance, full-stack code snippet manager designed for developers. Features a **Hybrid Storage Architecture** that automatically syncs to the cloud (Supabase) but falls back to LocalStorage if no backend is configured.
 
-![Project Preview](<img width="1919" height="954" alt="image" src="https://github.com/user-attachments/assets/804c7347-f1ee-4ab8-b590-16b3de92e30b" />) 
+<img width="1919" height="954" alt="image" src="https://github.com/user-attachments/assets/8da98075-56c4-4326-a05b-85c88e5e79ec" />
+
 
 
 ## 🚀 Key Features
