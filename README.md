@@ -54,6 +54,8 @@ To prevent "loading spinners" on every page turn, the app uses a module-level **
 
 Screenshots
 <img width="1550" height="895" alt="image" src="https://github.com/user-attachments/assets/5e929795-47b3-4afd-b103-f0a72c78c008" />
+<img width="1326" height="945" alt="image" src="https://github.com/user-attachments/assets/2eb7d8f8-d433-4181-b3fb-f9aff37e0468" />
+
 
 Built by **Vishnu Shaji**
 
