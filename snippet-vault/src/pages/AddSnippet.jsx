@@ -74,6 +74,7 @@ const AddSnippet = () => {
                   <option value="css">CSS</option>
                   <option value="html">HTML</option>
                   <option value="sql">SQL</option>
+                  <option value="nodejs">Node Js</option>
                 </select>
               </div>
             </div>

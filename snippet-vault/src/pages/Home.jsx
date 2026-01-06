@@ -90,7 +90,7 @@ const Home = () => {
             )}
 
             {/* Grid */}
-            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-10 columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
               {filteredSnippets.map((snippet) => (
                 <SnippetCard 
                   key={snippet.id}

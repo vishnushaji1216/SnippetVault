@@ -10,7 +10,7 @@ const SnippetCard = ({ title, language, code, tags, onDelete }) => {
   };
 
   return (
-    <div className="group relative flex flex-col justify-between rounded-xl border border-slate-800 bg-slate-900/50 p-5 transition-all hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-900/20">
+    <div className="break-inside-avoid mb-6 group relative flex flex-col justify-between rounded-xl border border-slate-800 bg-slate-900/50 p-5 transition-all hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-900/20">
       
       <div className="mb-4 flex items-start justify-between">
         <div>
