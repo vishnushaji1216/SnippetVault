@@ -1,0 +1,61 @@
+# ⚡ SnippetVault
+
+A high-performance, full-stack code snippet manager designed for developers. Features a **Hybrid Storage Architecture** that automatically syncs to the cloud (Supabase) but falls back to LocalStorage if no backend is configured.
+
+<img width="1919" height="954" alt="image" src="https://github.com/user-attachments/assets/8da98075-56c4-4326-a05b-85c88e5e79ec" />
+
+
+
+## 🚀 Key Features
+
+- **Hybrid Storage Engine:** Automatically detects environment. Uses **Supabase (PostgreSQL)** if API keys are present, otherwise falls back to **LocalStorage** for offline/local use.
+- **Smart Caching:** Implements an in-memory caching layer to eliminate redundant network requests, making navigation instant.
+- **Search & Filter:** Real-time filtering by title and tags (e.g., #react, #python).
+- **Responsive:** Fully optimized for Mobile, Tablet, and Desktop.
+
+## 🛠️ Tech Stack
+
+- **Frontend:** React (Vite)
+- **Styling:** Tailwind CSS
+- **Backend:** Supabase (Optional)
+- **State/Cache:** Custom In-Memory Store + React Hooks
+
+## 🧠 Architecture Highlights
+
+### 1. The Hybrid Fallback System
+The app is built to be "distribution-ready." It checks for environment variables at runtime:
+- **Scenario A (Cloud Mode):** If `.env` contains Supabase keys, the app acts as a full-stack cloud application with real-time database sync.
+- **Scenario B (Local Mode):** If keys are missing (e.g., a user clones the repo without setup), the app automatically switches to `localStorage`, ensuring the app **never crashes** and remains fully functional.
+
+### 2. Performance Strategy
+To prevent "loading spinners" on every page turn, the app uses a module-level **Write-Through Cache**.
+- **Reads:** Data is fetched from memory first (instant). Network requests only happen if the cache is cold.
+- **Writes:** When a snippet is created/deleted, the cache is optimistically updated immediately, while the database updates in the background.
+
+## ⚙️ Installation & Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/vishnushaji1216/SnippetVault/
+   cd snippet-vault
+
+2. **Install dependencies**
+   ```bash
+   npm install
+
+3. **(Optional)** Set up Cloud Sync Create a .env file in the root directory. If you skip this, the app will run in **Local Mode**.
+   ```bash
+   VITE_SUPABASE_URL=your_supabase_url
+   VITE_SUPABASE_KEY=your_supabase_anon_key
+
+4. **Run the App**
+   ```bash
+   npm run dev
+
+Screenshots
+<img width="1550" height="895" alt="image" src="https://github.com/user-attachments/assets/5e929795-47b3-4afd-b103-f0a72c78c008" />
+<img width="1326" height="945" alt="image" src="https://github.com/user-attachments/assets/2eb7d8f8-d433-4181-b3fb-f9aff37e0468" />
+
+
+Built by **Vishnu Shaji**
+
