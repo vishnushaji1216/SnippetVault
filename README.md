@@ -38,3 +38,22 @@ To prevent "loading spinners" on every page turn, the app uses a module-level **
    ```bash
    git clone https://github.com/vishnushaji1216/SnippetVault/
    cd snippet-vault
+
+2. **Install dependencies**
+   ```bash
+   npm install
+
+3. **(Optional)** Set up Cloud Sync Create a .env file in the root directory. If you skip this, the app will run in **Local Mode**.
+   ```bash
+   VITE_SUPABASE_URL=your_supabase_url
+   VITE_SUPABASE_KEY=your_supabase_anon_key
+
+4. **Run the App**
+   ```bash
+   npm run dev
+
+Screenshots
+<img width="1550" height="895" alt="image" src="https://github.com/user-attachments/assets/5e929795-47b3-4afd-b103-f0a72c78c008" />
+
+Built by **Vishnu Shaji**
+
